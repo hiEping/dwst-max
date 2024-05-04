@@ -1,87 +1,55 @@
-import { Space, Switch, version, theme, MappingAlgorithm, Radio, Form, Button  } from 'antd';
-import { PageContainer } from '@ant-design/pro-components';
 import { useAntdConfig, useAntdConfigSetter } from '@umijs/max';
-import { useState } from 'react';
+import { Space, version, theme, Switch, Form, Radio, Divider } from 'antd';
+import { getActiveTheme, getThemes } from '@/services/dwst/themes';
+import type { ThemeConfigProp } from '@/services/dwst/themes';
+import { PageContainer } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
 const { darkAlgorithm, defaultAlgorithm } = theme;
+const themeJson = await getActiveTheme();  //激活的主题
+const themeConfigObj = themeJson.data;
+const themeListJson = await getThemes();    //所有的主题
+const themeList = themeListJson.data;
+
+function isThemeConfigProp(obj: ThemeConfigProp|{Error: string}): obj is ThemeConfigProp {
+  return "theme" in obj
+}
 
 export default function Page() {
+  const {initialState, setInitialState} = useModel('@@initialState');
   const setAntdConfig = useAntdConfigSetter();
-  const antdConfig = useAntdConfig();  
-  const [form] = Form.useForm();
-  const [themeValue, setThemeValue] = useState('default');
-  function handleThemeChange(changeValue: string) {
-    setThemeValue(changeValue);
-    // const themeAlgorithm = changeValue.includes('dark')?darkAlgorithm:defaultAlgorithm;
-    switch (changeValue) {
-      case 'dark':
-        setAntdConfig({
-          theme: {
-            algorithm: [darkAlgorithm],
-            token: {
-              "colorPrimary": "#2c76e6",
-              "colorInfo": "#2c76e6",
-              "colorTextBase": "#fff",
-              "colorBgBase": "#000"
-            }
-          }
-        })
-        break;
-      case 'dark-blue':
-        setAntdConfig({
-          theme: {
-            algorithm: [darkAlgorithm],
-            token: {
-              "colorPrimary": "#2c76e6",
-              "colorInfo": "#2c76e6",
-              "colorTextBase": "#fff",
-              "colorBgBase": "#141425"  
-            }
-          }
-        })
-        break;
-      case 'light-green':
-        setAntdConfig({
-          theme: {
-            algorithm: [defaultAlgorithm],
-            token: {
-              "colorPrimary": "#0b8105",
-              "colorInfo": "#0b8105",
-              "colorTextBase": "#000",
-              "colorBgBase": "#d9e9d9"
-            },
-            components: {
-              Button: {}
-            }
-          }
-        })
-        break;
-      default:
-        setAntdConfig({
-          theme: {
-            algorithm: [defaultAlgorithm],
-            token: {
-              "colorPrimary": "#2c76e6",
-              "colorInfo": "#2c76e6",
-              "colorTextBase": "#000",
-              "colorBgBase": "#fff",
-            }
-          }
-        })
-    }    
-  }
   return (
     <PageContainer>
-      <p>with antd@{version}</p>
-      <Form>
-        <Form.Item label="设置主题风格" name="layout">
-          <Radio.Group optionType='button' defaultValue={'default'} value={themeValue} onChange={(e)=>handleThemeChange(e.target.value)} buttonStyle='solid'>
-            <Radio.Button value="default">纯净白</Radio.Button>
-            <Radio.Button value="light-green">春天绿</Radio.Button>
-            <Radio.Button value="dark">深空黑</Radio.Button>
-            <Radio.Button value="dark-blue">暗夜蓝</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-      </Form>
+      with antd@{version}
+      <Divider type='horizontal' orientation='left'/>      
+      {
+        Array.isArray(themeList) && <Radio.Group 
+          buttonStyle='solid' 
+          // defaultValue={isThemeConfigProp(themeConfigObj) ? themeConfigObj.name : undefined}
+          defaultValue={initialState?.themeName}
+          onChange={(e) => {          
+            for (let i=0; i<themeList.length; i++) {
+              if (themeList[i].name === e.target.value) {
+                setInitialState((init) => {
+                  return {
+                    name: init?.name,
+                    themeName: themeList[i].name,
+                    themeType: themeList[i].theme.algorithm,
+                  }
+                })
+                const newTheme = {
+                  token: themeList[i].theme.token,
+                  algorithm: [themeList[i].theme.algorithm.includes("darkAlgorithm") ? darkAlgorithm : defaultAlgorithm]
+                }
+                setAntdConfig({
+                  theme: newTheme
+                })
+              }
+            }
+          }}
+        >
+          {themeList.map((val: ThemeConfigProp) => <Radio.Button value={val.name} key={val.name}>{val.beautyName}</Radio.Button>)}
+        </Radio.Group>
+      }   
     </PageContainer>
   );
 }

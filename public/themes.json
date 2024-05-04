@@ -1,0 +1,82 @@
+[
+    {
+        "name": "dark",
+        "beautyName": "深空黑",
+        "active": false,
+        "theme": {
+            "algorithm": [
+                "darkAlgorithm"
+            ],
+            "token": {
+                "colorPrimary": "#A922F4",
+                "colorInfo": "#A922F4",
+                "colorTextBase": "#fff",
+                "colorBgBase": "#000"
+            }
+        }
+    },
+    {
+        "name": "dark-blue",
+        "beautyName": "极夜蓝",
+        "active": false,
+        "theme": {
+            "algorithm": [
+                "darkAlgorithm"
+            ],
+            "token": {
+                "colorPrimary": "#2c76e6",
+                "colorInfo": "#2c76e6",
+                "colorTextBase": "#fff",
+                "colorBgBase": "#141425"
+            }
+        }
+    },
+    {
+        "name": "light-green",
+        "beautyName": "早春绿",
+        "active": false,
+        "theme": {
+            "algorithm": [
+                "defaultAlgorithm"
+            ],
+            "token": {
+                "colorPrimary": "#0b8105",
+                "colorInfo": "#0b8105",
+                "colorTextBase": "#000",
+                "colorBgBase": "#d9e9d9"
+            }
+        }
+    },
+    {
+        "name": "default",
+        "beautyName": "纯净白",
+        "active": true,
+        "theme": {
+            "algorithm": [
+                "defaultAlgorithm"
+            ],
+            "token": {
+                "colorPrimary": "#2c76e6",
+                "colorInfo": "#2c76e6",
+                "colorTextBase": "#000",
+                "colorBgBase": "#fff"
+            }
+        }
+    },
+    {
+        "name": "maomao",
+        "beautyName": "猫猫色",
+        "active": false,
+        "theme": {
+            "algorithm": [
+                "defaultAlgorithm"
+            ],
+            "token": {
+                "colorPrimary": "#DADB03",
+                "colorInfo": "#6B4110",
+                "colorTextBase": "#6B4110",
+                "colorBgBase": "#ED99BA"
+            }
+        }
+    }
+]
