@@ -181,7 +181,7 @@ export default function Page() {
         </Radio.Group>
       }   
       <Divider type='horizontal' orientation='left'/>
-      <Card title='组件效果'>
+      <Card title='组件的主题效果'>
         <ProTable<API.UserInfo>
           headerTitle="查询表格"
           actionRef={actionRef}

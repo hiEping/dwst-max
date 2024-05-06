@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './login.less';
+import styles from './index.less';
 
 export default function Page() {
   return (
     <div>
-      <h1 className={styles.title}>Page login</h1>
+      <h1 className={styles.title}>Page index</h1>
     </div>
   );
 }
