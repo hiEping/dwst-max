@@ -8,8 +8,8 @@
                 "darkAlgorithm"
             ],
             "token": {
-                "colorPrimary": "#A922F4",
-                "colorInfo": "#A922F4",
+                "colorPrimary": "#2c76e6",
+                "colorInfo": "#2c76e6",
                 "colorTextBase": "#fff",
                 "colorBgBase": "#000"
             }
@@ -24,8 +24,8 @@
                 "darkAlgorithm"
             ],
             "token": {
-                "colorPrimary": "#2c76e6",
-                "colorInfo": "#2c76e6",
+                "colorPrimary": "#A922F4",
+                "colorInfo": "#A922F4",
                 "colorTextBase": "#fff",
                 "colorBgBase": "#141425"
             }
@@ -65,7 +65,7 @@
     },
     {
         "name": "maomao",
-        "beautyName": "猫猫色",
+        "beautyName": "哈喽粉",
         "active": false,
         "theme": {
             "algorithm": [
