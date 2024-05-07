@@ -14,7 +14,12 @@ export default defineConfig({
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      redirect: '/welcome',
+    },
+    {
+      path: '/login',
+      layout: false,
+      component: 'Login'
     },
     {
       name: '工作台',
