@@ -1,10 +1,11 @@
 // 运行时配置
 import { RunTimeLayoutConfig, RuntimeAntdConfig, history } from '@umijs/max';
 import { theme } from 'antd';
-import { getActiveTheme } from '@/services/dwst/themes';
-import { currentUser as queryCurrentUser } from './services/dwst/login';
-import type { ThemeConfigProp } from '@/services/dwst/themes';
+import { getActiveTheme, ThemeConfigProp} from '@/services/dwst/themes';
+import { currentUser as queryCurrentUser } from '@/services/dwst/login';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
+import { Question, AvatarDropdown, AvatarName, } from '@/components/RightContent';
+import RightContent from '@/components/RightContent';
 
 const loginPath = '/login';
 const themeJson = await getActiveTheme();
@@ -83,10 +84,17 @@ export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => 
       }
     },
     // rightRender: (initialState) => {
-    //   return (
-
-    //   )
-    // }
+    //   return <RightContent />
+    // },
+    // actionsRender: () => [<Question key="doc" />, <SelectLang key="SelectLang" />],
+    actionsRender: () => [<Question key="doc" ></Question>],
+    avatarProps: {
+      src: initialState?.currentUser?.avatar,
+      title: <AvatarName />,
+      render: (_, avatarChildren) => {
+        return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
+      },
+    },
   };
 };
 

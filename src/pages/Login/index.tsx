@@ -136,151 +136,150 @@ export default function Page() {
         <title>
           登录页 - DWST
         </title>
-      </Helmet><LoginForm
-          contentStyle={{
-            minWidth: 280,
-            maxWidth: '75vw',
-          }}
-          logo={<img alt="logo" src="/dwst_logo_with_name.png" />}
-          // title=""
-          subTitle={"subtitle"}
-          initialValues={{
-            autoLogin: true,
-          }}
-          actions={[
-            "其他登录方式",
-            <ActionIcons key="icons" />,
+      </Helmet>
+      <LoginForm
+        contentStyle={{
+          minWidth: 280,
+          maxWidth: '75vw',
+        }}
+        logo={<img alt="logo" src="/dwst_logo_with_name.png" />}
+        // title=""
+        subTitle={"subtitle"}
+        initialValues={{
+          autoLogin: true,
+        }}
+        actions={[
+          "其他登录方式",
+          <ActionIcons key="icons" />,
+        ]}
+        onFinish={async (values) => {
+          await handleSubmit(values as API.LoginParams);
+        }}
+      >
+        <Tabs
+          activeKey={type}
+          onChange={setType}
+          centered
+          items={[
+            {
+              key: 'account',
+              label: '账户密码登录',
+            },
+            {
+              key: 'mobile',
+              label: '手机号登录',
+            },
           ]}
-          onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParams);
+        />
+        {status === 'error' && loginType === 'account' && (
+          <LoginMessage
+            content='账户或密码错误(admin/ant.design)'
+          />
+        )}
+        {type === 'account' && (
+          <>
+            <ProFormText
+              name="username"
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined />,
+              }}
+              placeholder='用户名: admin or user'
+              rules={[
+                {
+                  required: true,
+                  message: "请输入用户名!",
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="password"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined />,
+              }}
+              placeholder='密码: ant.design'
+              rules={[
+                {
+                  required: true,
+                  message: "请输入密码！",
+                },
+              ]}
+            />
+          </>
+        )}
+        {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+        {type === 'mobile' && (
+          <>
+            <ProFormText
+              fieldProps={{
+                size: 'large',
+                prefix: <MobileOutlined />,
+              }}
+              name="mobile"
+              placeholder='手机号'
+              rules={[
+                {
+                  required: true,
+                  message: "请输入手机号！",
+                },
+                {
+                  pattern: /^1\d{10}$/,
+                  message: "手机号格式错误！",
+                },
+              ]}
+            />
+            <ProFormCaptcha
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined />,
+              }}
+              captchaProps={{
+                size: 'large',
+              }}
+              placeholder={'请输入验证码'}
+              captchaTextRender={(timing, count) => {
+                if (timing) {
+                  return `${count} 获取验证码`;
+                }
+                return '获取验证码';
+              }}
+              name="captcha"
+              rules={[
+                {
+                  required: true,
+                  message: ("请输入验证码！"),
+                },
+              ]}
+              onGetCaptcha={async (phone) => {
+                const result = await getFakeCaptcha({
+                  phone,
+                });
+                if (!result) {
+                  return;
+                }
+                message.success('获取验证码成功！验证码为：1234');
+              }}
+            />
+          </>
+        )}
+        <div
+          style={{
+            marginBottom: 24,
           }}
         >
-          <Tabs
-            activeKey={type}
-            onChange={setType}
-            centered
-            items={[
-              {
-                key: 'account',
-                label: '账户密码登录',
-              },
-              {
-                key: 'mobile',
-                label: '手机号登录',
-              },
-            ]}
-          />
-
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage
-              content='账户或密码错误(admin/ant.design)'
-            />
-          )}
-          {type === 'account' && (
-            <>
-              <ProFormText
-                name="username"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <UserOutlined />,
-                }}
-                placeholder='用户名: admin or user'
-                rules={[
-                  {
-                    required: true,
-                    message: "请输入用户名!",
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="password"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                placeholder='密码: ant.design'
-                rules={[
-                  {
-                    required: true,
-                    message: "请输入密码！",
-                  },
-                ]}
-              />
-            </>
-          )}
-
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
-          {type === 'mobile' && (
-            <>
-              <ProFormText
-                fieldProps={{
-                  size: 'large',
-                  prefix: <MobileOutlined />,
-                }}
-                name="mobile"
-                placeholder='手机号'
-                rules={[
-                  {
-                    required: true,
-                    message: "请输入手机号！",
-                  },
-                  {
-                    pattern: /^1\d{10}$/,
-                    message: "手机号格式错误！",
-                  },
-                ]}
-              />
-              <ProFormCaptcha
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                captchaProps={{
-                  size: 'large',
-                }}
-                placeholder={'请输入验证码'}
-                captchaTextRender={(timing, count) => {
-                  if (timing) {
-                    return `${count} 获取验证码`;
-                  }
-                  return '获取验证码';
-                }}
-                name="captcha"
-                rules={[
-                  {
-                    required: true,
-                    message: ("请输入验证码！"),
-                  },
-                ]}
-                onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
-                  message.success('获取验证码成功！验证码为：1234');
-                }}
-              />
-            </>
-          )}
-          <div
+          <ProFormCheckbox noStyle name="autoLogin">
+            自动登录
+          </ProFormCheckbox>
+          <a
             style={{
-              marginBottom: 24,
+              float: 'right',
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              自动登录
-            </ProFormCheckbox>
-            <a
-              style={{
-                float: 'right',
-              }}
-            >
-              忘记密码
-            </a>
-          </div>
-        </LoginForm>
+            忘记密码
+          </a>
+        </div>
+      </LoginForm>
     </div>
   );
 }

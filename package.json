@@ -17,7 +17,9 @@
     "@umijs/max": "^4.1.10",
     "antd": "^5.4.0",
     "antd-style": "^3.6.2",
-    "express": "^4.19.2"
+    "classnames": "^2.5.1",
+    "express": "^4.19.2",
+    "rc-menu": "^9.13.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
