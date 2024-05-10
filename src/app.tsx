@@ -18,7 +18,7 @@ function isThemeConfigProp(obj: ThemeConfigProp|{Error: string}): obj is ThemeCo
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 //Promise<{name: string, themeType?: string | string[], themeName?: string}>
 export async function getInitialState():  Promise<{
-  name: string;
+  // name: string;
   themeType?: string | string[];
   themeName?: string;
   settings?: Partial<LayoutSettings>;
@@ -43,7 +43,7 @@ export async function getInitialState():  Promise<{
     const currentUser = await fetchUserInfo();
     return {
       // name: '德为专家',
-      name: currentUser?.name ? currentUser?.name : '德为专家',
+      // name: currentUser?.name ? currentUser?.name : '德为专家',
       themeType: isThemeConfigProp(themeConfigObj) ? themeConfigObj.theme.algorithm : undefined,
       themeName: isThemeConfigProp(themeConfigObj) ? themeConfigObj.name : undefined,
       fetchUserInfo,
@@ -52,17 +52,12 @@ export async function getInitialState():  Promise<{
     };
   }
   return {
-    name: '德为专家',
+    // name: '德为专家',
     themeType: isThemeConfigProp(themeConfigObj) ? themeConfigObj.theme.algorithm : undefined,
     themeName: isThemeConfigProp(themeConfigObj) ? themeConfigObj.name : undefined,
     fetchUserInfo,
     settings: layout as Partial<LayoutSettings>,
   };
-  // return { 
-  //   name: '德为专家',
-  //   themeType: isThemeConfigProp(themeConfigObj) ? themeConfigObj.theme.algorithm : undefined,
-  //   themeName: isThemeConfigProp(themeConfigObj) ? themeConfigObj.name : undefined,
-  // };
 }
 
 export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => {
