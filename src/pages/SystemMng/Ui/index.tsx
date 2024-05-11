@@ -161,7 +161,7 @@ export default function Page() {
               if (themeList[i].name === e.target.value) {
                 setInitialState((init) => {
                   return {
-                    name: init?.name,
+                    ...init,
                     themeName: themeList[i].name,
                     themeType: themeList[i].theme.algorithm,
                   }
