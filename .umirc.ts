@@ -124,6 +124,7 @@ export default defineConfig({
     },
     {
       name: '权限演示',
+      access: 'canSeeAdmin',
       path: '/access',
       component: './Access',
     },
@@ -134,4 +135,7 @@ export default defineConfig({
     // },
   ],
   npmClient: 'pnpm',
+  favicons: [
+    '/dwst.ico'
+  ],
 });
